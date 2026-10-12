@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SuS-Übersicht Beispiel</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAMAAAAKE/YAAAAAElBMVEX0MXX/+vb7o772SYX92OD4dqHr0sAFAAADNklEQVR4nO2d23LjMAxDff3/X94oqTdxmzgiDRLwDPHUxzMYgLIsuRmGUqlUKpVKpVKpVIJqntd1nTbd/p7ZRAeaG+oyvtOyTHLo80faHfm0skF/dOP9jvsUn/sGbODd/CZiu4Cp2LZI/NWUXkq/xS9KNRtC3DRlEc/ruVTstKREZEaZnEeNNPlH0QkJQI6mnkOQx8gZgs7yi8JivYYhj1EBCbT5rgirw9K8KcDq0Gg8BLc6OBp3oa3OYB7HKzJjZ3USMzQfCR18aMExh8+6p3DzIyscSOg5jxnXxLxw4JqYaTQMOjHRuPGRmQ4YdCYzbCEv6II+UGoRUdCpIw8FnfaI1wR7zMvMBww602rcA3ViqnFbl8RNAHC/lUeN3NmmUUO341nU4HdMV3xbE3UAsBfwFcKmeLMjXlFHv6AOOsIIxo46wZhPHoUfKoi5KaySsYeJQSmJPtmHHo1vSjghh2MHTOk3Aqck6wYFFDvvsgoQO/NeEOoJMCfS/4UxO/veGMTs9FtjAOrkdGCoGbcKT1NTLvqePJtJu5u317k3UayrsmcCQqjhQ2esJqVjOGU1776932qe0ScGCPOivZeZVsMmb6ipXzQ4oalGe6GJNfRDc78v8kFzjXZCkz/kuqLRvsWFbLRrGScb7duVsz9N9PSQbbQr0myjPZFmG+1KB9toTzroRns+V2Ub7UkH/ctgRw25z9FNjnTQjXbUkN5CTzroLXTU8IpG81voqCG9hY4a8sPhSAe/hfYa8sNhN1qghXajBcJhrqFAC83zTiEcZqMFwmGuoUI4rDVUCIfVaP4Wq8lotMCyYq6hRKCN804jHEajJZiNNZQItLGGGoG2GS0xoQeb0RolNNZQJNCmeScSaJPRKsyWGqqU0FJDlRKa0iHDbKihDnN/OlSG3WCooczgGPrTocTcmw4p5s7ZIcXcGWkt5r5IizF3RVqNuQdajrnjlpUe83doQeavE09o7X7qiszH0DrPz3sdTY/8f9/dqYPFRTMaTR+XcdVoNH0aH7LRuOttPpj/+r9H76zWtrnpT6r1kYffAbkE8vD66aTez50cqP0SyqWAS6VSqVQqlUql0tX0D3QhKJAiQHIRAAAAAElFTkSuQmCC">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+body{background:#f4f7fa;font-family:'Source Sans Pro','Segoe UI',system-ui,sans-serif;font-size:14px}
+.demo-top{background:#2e8bb5;color:#fff;padding:22px 0;font-size:28px;font-weight:300}.demo-top>div,.demo-note>div{max-width:1400px;margin:0 auto;padding:0 24px}
+.demo-note{background:#fff8e1;border-bottom:1px solid #f0e2a8;padding:6px 0;font-size:12px;color:#7a6200}
+.demo-filters{padding:14px 24px 0;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.2fr) auto;gap:12px;max-width:1400px;align-items:start}
+@media(max-width:900px){.demo-filters{grid-template-columns:1fr}}
+.demo-page{padding:0 24px 40px;margin:0 auto;max-width:1400px}
+.btn{border-radius:0}.form-select,.form-control{border-radius:0}
+#su-root .su-pavatar{float:right;width:64px;height:64px;margin:0 0 6px 10px}
+#su-root{--su-blue:#2e8bb5;--su-ink:#222;--su-mute:#6b7280;--su-line:#e3e8ee;--su-bg:#f4f7fa;font-size:13px;color:var(--su-ink)}
+#su-root{padding:8px 0 40px}
+#su-root .su-hero{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--su-line);border-radius:10px;padding:16px 20px;margin-bottom:14px}
+#su-root .su-avatar{width:52px;height:52px;border-radius:50%;background:var(--su-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
+#su-root .su-name{font-size:20px;font-weight:700;line-height:1.2}#su-root .su-sub{color:var(--su-mute);margin-top:2px}
+#su-root .su-kpis{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
+#su-root .su-kpi{background:var(--su-bg);border-radius:8px;padding:8px 14px;min-width:92px}
+#su-root .su-kpi b{display:block;font-size:20px;line-height:1.1}#su-root .su-kpi span{color:var(--su-mute);font-size:11px}
+#su-root .su-nav{display:flex;gap:6px}
+#su-root .su-nav button,#su-root .su-pager button{border:1px solid var(--su-line);background:#fff;border-radius:6px;padding:6px 10px;cursor:pointer}
+#su-root .su-nav button:hover,#su-root .su-pager button:hover:not(:disabled){background:var(--su-bg)}
+#su-root .su-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;align-items:start}
+#su-root .su-card{background:#fff;border:1px solid var(--su-line);border-radius:10px;margin-bottom:14px;overflow:hidden}
+#su-root .su-card>h3{margin:0;padding:11px 16px;background:var(--su-blue);color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+#su-root .su-card>h3 .su-ttl{flex:1}#su-root .su-card>h3 small{font-weight:400;opacity:.85}
+#su-root .su-card>h3 .su-chev2{display:inline-block;transition:.15s}#su-root .su-card.su-collapsed>h3 .su-chev2{transform:rotate(-90deg)}
+#su-root .su-card.su-collapsed .su-body{display:none}
+#su-root .su-card>h3 a{color:#fff;text-decoration:none;font-weight:400;font-size:12px;white-space:nowrap;border:1px solid rgba(255,255,255,.55);border-radius:12px;padding:2px 9px}
+#su-root .su-card>h3 a:hover{background:rgba(255,255,255,.18)}#su-root .su-body{padding:12px 16px}
+#su-root tr.su-row{cursor:pointer}#su-root tr.su-row:hover td{background:var(--su-bg)}
+#su-root .su-det>td{padding:10px 14px}
+#su-root .su-empty{color:var(--su-mute);padding:14px 0;text-align:center}
+#su-root .su-tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;background:var(--su-bg);margin:0 3px 3px 0}
+#su-root .su-open,#su-root .su-bad{background:#fdecec;color:#c0392b}#su-root .su-ok{background:#e6f6ec;color:#1e8e4e}#su-root .su-mid{background:#fff3e0;color:#b45f06}#su-root .su-pred{background:#e8f1fb;color:#1f5fa8}
+#su-root .su-pager{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding-top:10px;color:var(--su-mute);font-size:12px}
+#su-root .su-pager button:disabled{opacity:.4;cursor:default}
+@keyframes su-rot{to{transform:rotate(360deg)}}
+@keyframes su-flash{0%{box-shadow:0 0 0 3px #f43175}100%{box-shadow:0 0 0 0 transparent}}
+#su-root .su-flash{animation:su-flash 1.6s}
+#su-root .su-glance{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff;border:1px solid var(--su-line);border-radius:10px;padding:10px 14px;margin-bottom:14px}
+#su-root .su-gl{font-weight:700;margin-right:6px}
+#su-root .su-chip{border:0;border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:600;cursor:pointer}
+#su-root .su-chip.bad{background:#fdecec;color:#c0392b}#su-root .su-chip.mid{background:#fff3e0;color:#b45f06}#su-root .su-chip.ok{background:#e6f6ec;color:#1e8e4e;cursor:default}
+#su-root .su-kvh{font-size:11px;font-weight:700;color:var(--su-mute);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 2px}
+#su-root .su-kvh:first-child{margin-top:0}
+#su-root .su-kv{display:grid;grid-template-columns:120px 1fr;gap:10px;padding:3px 0}
+#su-root .su-kv.one{grid-template-columns:1fr}
+#su-root .su-kv span{color:var(--su-mute);font-size:12px}#su-root .su-kv b{font-weight:600}#su-root .su-kv a{color:var(--su-blue);text-decoration:none}
+#su-root .su-spin{display:flex;align-items:center;gap:10px;padding:14px 4px;color:var(--su-mute)}
+#su-root .su-spin::before{content:'';width:16px;height:16px;border:2px solid #d5dde4;border-top-color:var(--su-blue);border-radius:50%;animation:su-rot .8s linear infinite;flex:none}
+#su-root .su-dot{display:inline-block;width:10px;height:10px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;animation:su-rot .8s linear infinite;vertical-align:-1px;margin-right:4px}
+#su-root .su-warn{color:#ffe08a;font-weight:700}
+#su-root .su-hero{gap:12px}#su-root .su-who{min-width:0}#su-root .su-sp{flex:1}
+#su-root .su-arrow{width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--su-line);background:#fff;color:#4b5563;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s,transform .1s}
+#su-root .su-arrow:hover:not(:disabled){background:var(--su-blue);border-color:var(--su-blue);color:#fff;box-shadow:0 2px 6px rgba(46,139,181,.35)}
+#su-root .su-arrow:active:not(:disabled){transform:scale(.93)}
+#su-root .su-arrow:disabled{opacity:.35;cursor:default}
+#su-root .su-chip.neutral{background:#eef2f6;color:#4b5563}
+#su-root .su-card>h3 a.su-ico{width:22px;height:22px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:15px;line-height:1;border-color:rgba(255,255,255,.35);opacity:.8}
+#su-root .su-card>h3 a.su-ico:hover{opacity:1;background:rgba(255,255,255,.22)}
+#su-root .su-chip:hover:not(.ok){box-shadow:0 0 0 2px rgba(0,0,0,.1)}
+#su-root .su-prog{height:3px;background:#e8eef3;border-radius:2px;margin:0 0 10px;overflow:hidden}
+#su-root .su-prog i{display:block;height:100%;background:var(--su-blue);transition:width .3s}
+#su-root input.su-ro{width:120px;accent-color:var(--su-blue);pointer-events:none;vertical-align:middle;margin:0}
+#su-root .su-switch{display:inline-flex;align-items:center;gap:8px;margin:0 0 10px;cursor:pointer;color:var(--su-mute)}
+#su-root .su-spin{color:var(--su-mute);padding:10px}#su-root .su-lnk{color:var(--su-blue);text-decoration:none;white-space:nowrap}
+#su-dialog{--su-blue:var(--bs-primary);--su-ink:var(--bs-body-color);--su-mute:var(--bs-gray-600);--su-line:var(--bs-gray-300);--su-bg:var(--bs-gray-100);color:var(--su-ink)}
+#su-dialog{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20000;display:flex;align-items:flex-start;justify-content:center;padding-top:5vh}
+#su-dialog .su-box{background:var(--bs-white);border-radius:0;width:min(1000px,94vw);max-height:88vh;overflow:auto;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+#su-dialog .su-dh{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid var(--su-line);font-size:18px}
+#su-dialog .su-dh button{border:0;background:none;font-size:22px;cursor:pointer}
+#su-dialog .su-dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;padding:6px 22px 14px}
+#su-dialog .su-sec{padding:14px 14px 6px 0}#su-dialog .su-sec h4{margin:0 0 8px;font-size:14px;display:flex;align-items:center;gap:8px}
+#su-dialog .su-opt{padding-top:2px;padding-bottom:2px}#su-dialog .su-tile .su-pickbox{margin-top:0}
+#su-dialog .su-sub2{font-size:11px;color:var(--su-mute);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.03em}
+#su-dialog .su-note{color:var(--su-mute);font-size:12px;padding:6px 0}
+#su-dialog .su-df{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-top:1px solid var(--su-line)}
+#su-dialog .su-box.su-wide{width:min(980px,95vw)}
+#su-dialog .su-md{display:grid;grid-template-columns:290px 1fr;min-height:430px;max-height:62vh}
+#su-dialog .su-list{border-right:1px solid var(--su-line);overflow:auto;background:var(--bs-gray-100);padding:6px 0}
+#su-dialog .su-grp2{font-size:11px;font-weight:700;color:var(--su-mute);text-transform:uppercase;letter-spacing:.04em;padding:12px 16px 4px}
+#su-dialog .su-tile{display:flex;gap:10px;padding:10px 16px;cursor:pointer;border-left:3px solid transparent}
+#su-dialog .su-tile:hover{background:var(--bs-gray-100)}
+#su-dialog .su-tile.focus{background:var(--bs-gray-100);border-left-color:var(--bs-primary)}
+#su-dialog .su-tile .t{font-weight:600}#su-dialog .su-tile .d{font-size:12px;color:var(--su-mute)}
+#su-dialog .su-tile .c{font-size:11px;color:var(--bs-primary);margin-top:2px}
+#su-dialog .su-tile:not(.on) .c{opacity:.45}#su-dialog .su-tile input{margin-top:3px}
+#su-dialog .su-panels{padding:14px 24px 18px;overflow:auto}
+#su-dialog .su-panel h4{margin:0 0 4px;font-size:16px}
+#su-dialog .su-picklist{max-height:150px;overflow:auto;margin-top:-1px}#su-dialog .su-panels{padding:14px 20px 18px}#su-dialog .su-box.su-wide{width:min(1120px,96vw)}#su-dialog .su-sub2{margin-top:14px}#su-dialog [data-panel="summary"] .su-opt{padding-top:1px;padding-bottom:1px}
+#su-dialog .su-more{margin-top:10px}#su-dialog .su-more summary{cursor:pointer;color:var(--su-blue);padding:6px 0}
+#su-dialog .su-sub{color:var(--su-mute);font-size:12px}#su-dialog .su-msg{color:var(--bs-danger);font-size:12px}#su-dialog a{color:var(--su-blue)}
+#su-dialog button.btn{border-radius:0}
+#su-root .su-rich{max-height:9em;overflow:auto;margin-top:2px}#su-root .su-rich ul,#su-root .su-rich ol{margin:2px 0 2px 1.1em;padding:0}#su-root .su-rich p{margin:0 0 .3em}
+#su-root .su-chip.ok{pointer-events:none}
+#su-root .su-card .select2-container{width:100%!important}
+#su-root .su-pavatar{float:right;width:64px;height:64px;margin:0 0 6px 10px}#su-stunav{min-width:300px}#su-stunav .btn{padding-left:.6rem;padding-right:.6rem}#su-stunav .btn:disabled{opacity:.4}
+#su-root .su-ro{width:120px;accent-color:var(--su-blue);pointer-events:none;vertical-align:middle;margin:0}
+
+/* ===== Feedback-Fragezeichen ===== */
+.demo-filters{position:relative}#su-root{position:relative}
+.su-q{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#222;color:#fff;font:700 13px/1 'Segoe UI',system-ui,sans-serif;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45);cursor:pointer;vertical-align:middle;margin-left:8px;user-select:none;flex:none;transition:transform .12s,background .12s}
+.su-q:hover,.su-q:focus-visible{transform:scale(1.15);background:#f43175;outline:none}
+.su-q.done{background:#1e8e4e}.su-q.done:hover,.su-q.done:focus-visible{background:#167a40}
+.su-q.abs{position:absolute;margin:0;z-index:5}
+.su-qtip{position:absolute;z-index:30001;max-width:300px;background:#222;color:#fff;padding:8px 11px;border-radius:6px;font-size:12.5px;line-height:1.4;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.35);display:none}
+.su-qtip small{display:block;opacity:.65;margin-top:5px;font-size:11px}
+.su-qpop{position:absolute;z-index:30000;width:340px;max-width:calc(100vw - 16px);background:#fff;border:1px solid #cfd8e0;box-shadow:0 8px 30px rgba(0,0,0,.28);padding:12px 14px;font-size:13px;color:#222}
+.su-qpop .su-qh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;color:#6b7280;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.su-qpop .su-qx,.su-qmodal .su-qx{border:0;background:none;font-size:20px;line-height:1;cursor:pointer;color:#6b7280}
+.su-qpop .su-qt{font-weight:600;margin-bottom:8px;line-height:1.4}
+.su-qpop textarea{font-size:13px;resize:vertical}
+.su-qpop .su-qf{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px}
+.su-qpop .su-qf .su-qs{color:#6b7280;font-size:11px}
+.su-qmodal{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30002;display:flex;align-items:flex-start;justify-content:center;padding-top:6vh}
+.su-qmodal .su-qbox{background:#fff;width:min(720px,94vw);max-height:86vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.su-qmodal .su-qmh{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid #e3e8ee;font-size:16px}
+.su-qmodal textarea{margin:14px 20px 0;font-family:ui-monospace,Consolas,monospace;font-size:12px;min-height:340px}
+.su-qmodal .su-qmf{display:flex;justify-content:flex-end;gap:8px;padding:12px 20px 16px}
+@media print{.su-q,.su-qtip,.su-qpop{display:none!important}}
+
+/* ===== Mehrseitiger Ablauf ===== */
+.su-steps{background:#fff;border-bottom:1px solid #e3e8ee}
+.su-steps>div{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;gap:4px;overflow-x:auto}
+.su-steps button{border:0;background:none;padding:12px 16px;color:#6b7280;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:14px;cursor:pointer}
+.su-steps button b{width:22px;height:22px;border-radius:50%;background:#e3e8ee;color:#4b5563;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.su-steps button.done b{background:#1e8e4e;color:#fff}
+.su-steps button.on{color:#2e8bb5;border-bottom-color:#2e8bb5;font-weight:600}.su-steps button.on b{background:#2e8bb5;color:#fff}
+.su-wrap{max-width:1000px;margin:0 auto;padding:32px 24px 70px}
+.su-h1{font-size:30px;font-weight:300;color:#2e8bb5;margin:0 0 14px}.su-h2{font-size:18px;font-weight:600;margin:28px 0 12px}
+.su-lead{font-size:16px;line-height:1.55;color:#374151;max-width:760px}
+.su-cards{display:grid;grid-template-columns:1fr;gap:14px;margin-top:22px}
+@media(max-width:800px){.su-cards,.su-fgrid{grid-template-columns:1fr!important}}
+.su-info{background:#fff;border:1px solid #e3e8ee;border-radius:10px;padding:16px 20px}.su-info h2{font-size:15px;font-weight:700;margin:0 0 6px;color:#2e8bb5}.su-info p{margin:0;line-height:1.5}
+.su-flow{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.su-flow li{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid #e3e8ee;border-radius:10px;padding:14px 18px}
+.su-flow li>b{flex:none;width:30px;height:30px;border-radius:50%;background:#2e8bb5;color:#fff;display:flex;align-items:center;justify-content:center}
+.su-flow li.here{border-color:#2e8bb5;background:#f1f8fc}.su-flow li span{color:#6b7280;display:block;margin-top:2px;line-height:1.45}
+.su-know{margin:22px 0 26px;background:#fff8e1;border:1px solid #f0e2a8;color:#7a6200;padding:12px 16px;line-height:1.5}
+.su-bar{position:fixed;left:0;right:0;bottom:0;z-index:1000;background:#fff;border-top:1px solid #e3e8ee;box-shadow:0 -2px 10px rgba(0,0,0,.06);display:none}
+body.pg2 .su-bar{display:block}body.pg2{padding-bottom:74px}
+.su-bar>div{max-width:1400px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:16px}
+.su-bar .su-bp{flex:1;min-width:0}.su-bar .su-bt{font-size:12px;color:#6b7280;margin-bottom:4px}
+.su-bar .su-bb{height:6px;background:#e8eef3;border-radius:3px;overflow:hidden}.su-bar .su-bb i{display:block;height:100%;background:#1e8e4e;width:0;transition:width .3s}
+.su-fgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:18px}
+.su-panel2{background:#fff;border:1px solid #e3e8ee;border-radius:10px;padding:18px 20px}.su-panel2 h2{font-size:16px;font-weight:700;margin:0 0 12px}
+.su-panel2 label{font-weight:600;font-size:13px;margin-bottom:3px}.su-panel2 .opt{font-weight:400;color:#6b7280}
+.su-sumitem{border-top:1px solid #e3e8ee;padding:9px 0}.su-sumitem:first-of-type{border-top:0}
+.su-sl{font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:#6b7280;margin-bottom:2px}
+.su-muted{color:#6b7280}.su-priv{font-size:12px;color:#6b7280;line-height:1.45}
+.su-thanks{text-align:center;padding:40px 10px}.su-thanks .su-check{width:64px;height:64px;border-radius:50%;background:#1e8e4e;color:#fff;font-size:34px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px}
+
+.su-qpop{width:380px}.su-qtip{max-width:340px}
+.su-qopts{display:grid;gap:7px}.su-qopts label{display:flex;gap:8px;align-items:center;margin:0;cursor:pointer}
+.su-qopts input[type=checkbox],.su-qopts input[type=radio]{margin:0;width:16px;height:16px;flex:none}
+.su-qerr{color:#b42318;font-size:12px;margin-top:6px}
+.su-open{color:#6b7280;font-style:italic}.su-sl a{margin-left:6px;text-transform:none;letter-spacing:0;font-size:12px}
+</style></head><body>
+<div class="demo-top"><div>SuS-Übersicht <span style="font-size:16px;opacity:.8">· Feedback</span></div></div>
+<nav class="su-steps" aria-label="Ablauf"><div>
+ <button type="button" data-go="1" data-stepbtn="1"><b>1</b> Einstieg</button>
+ <button type="button" data-go="2" data-stepbtn="2"><b>2</b> Fragen beantworten</button>
+ <button type="button" data-go="3" data-stepbtn="3"><b>3</b> Angaben &amp; Absenden</button>
+</div></nav>
+
+<section id="pg1"><div class="su-wrap">
+ <h1 class="su-h1">Hilf uns, die SuS-Übersicht besser zu machen</h1>
+ <p class="su-lead">Wir entwickeln eine neue Übersichtsseite, auf der alles Wichtige zu einer Schülerin oder einem Schüler an einem Ort zusammenläuft, damit man für die Vorbereitung auf ein Elterngespräch alle Daten an einem Ort hat. Bevor wir sie fertig bauen, möchten wir von dir wissen, ob sie im Schulalltag wirklich weiterhilft.</p>
+ <div class="su-cards">
+  <div class="su-info"><h2>Was wir von dir wollen</h2><p>Deine ehrliche Einschätzung aus der Praxis: Passt die Übersicht zu deinem Alltag? Was fehlt, was ist überflüssig, was ist unklar? Es gibt keine richtigen oder falschen Antworten.</p></div>
+ </div>
+ <h2 class="su-h2">So läuft es ab</h2>
+ <ol class="su-flow">
+  <li class="here"><b>1</b><div><strong>Einstieg lesen</strong><span>Du bist hier.</span></div></li>
+  <li><b>2</b><div><strong>Beispielansicht ansehen und Fragen beantworten</strong><span>Fahre mit der Maus über die schwarzen Fragezeichen: Es erscheint eine Frage. Mit einem Klick öffnet sich ein Feld für deine Antwort. Es sind 11 kurze Fragen. Beantworte bitte so viele wie möglich.</span></div></li>
+  <li><b>3</b><div><strong>Angaben machen und absenden</strong><span>Du gibst kurz an, wer du bist, und sendest deine Antworten ab.</span></div></li>
+ </ol>
+ <div class="su-know"><b>Gut zu wissen:</b> Das dauert etwa 5 Minuten. Die Beispielansicht enthält erfundene Daten, keine echten Personendaten. Deine Antworten bleiben bis zum Absenden nur in deinem Browser gespeichert.</div>
+ <button type="button" class="btn btn-primary btn-lg" data-go="2">Los geht's <i class="fa fa-chevron-right"></i></button>
+</div></section>
+
+<section id="pg2" hidden>
+<div class="demo-note"><div>Statische Beispielansicht mit erfundenen Daten für zwei Lernende. Keine echten Personendaten, die Buttons zum Drucken und Öffnen sind nicht aktiv. <b>Fahre mit der Maus über die schwarzen Fragezeichen und klicke darauf, um die Frage zu beantworten.</b></div></div>
+<div class="demo-filters">
+ <select class="form-select" aria-label="Semester"><option>Semester 2 (2025-2026)</option><option>Semester 1 (2025-2026)</option></select>
+ <select class="form-select" aria-label="Klasse"><option>3a Schule Musterdorf</option></select>
+ <div id="su-stunav" class="select-navigation d-flex align-items-center gap-1">
+  <button type="button" class="btn btn-secondary" id="su-prev" title="Vorherige Person der Klasse" aria-label="Vorherige Person der Klasse"><i class="fas fa-chevron-left"></i></button>
+  <div class="flex-grow-1"><select class="form-select" id="stusel" aria-label="Person wählen"></select></div>
+  <button type="button" class="btn btn-secondary" id="su-next" title="Nächste Person der Klasse" aria-label="Nächste Person der Klasse"><i class="fas fa-chevron-right"></i></button>
+ </div>
+ <button class="btn btn-primary" id="su-printbtn" title="Druckausgaben wählen: Beurteilungen, Portfolio, Journal, Absenzen, ALSV"><i class="fa fa-print"></i> Drucken</button>
+</div>
+<div class="demo-page"><div id="su-root"></div></div>
+</section>
+
+<section id="pg3" hidden><div class="su-wrap">
+ <h1 class="su-h1">Fast geschafft</h1>
+ <p class="su-lead">Gib noch kurz an, wer du bist, und sende dein Feedback ab.</p>
+ <div id="su-thanks" class="su-panel2 su-thanks" hidden>
+  <div class="su-check">✓</div>
+  <h2 style="font-size:22px">Vielen Dank für dein Feedback!</h2>
+  <p class="su-muted">Deine Antworten sind bei uns angekommen. Wir melden uns bei Rückfragen.</p>
+  <button type="button" class="btn btn-outline-secondary btn-sm" id="su-reset">Antworten löschen und neu beginnen</button>
+ </div>
+ <div class="su-fgrid" id="su-formwrap">
+  <form id="su-form" class="su-panel2" novalidate>
+   <h2>Deine Angaben</h2>
+   <div class="mb-3"><label for="f-name">Name *</label><input class="form-control" id="f-name" name="name" autocomplete="name" required></div>
+   <div class="mb-3"><label for="f-rolle">Rolle *</label><select class="form-select" id="f-rolle" name="rolle" required>
+    <option value="">Bitte wählen …</option><option>Lehrperson</option><option>Schulleitung</option><option>Schulverwaltung</option><option>Weiteres pädagogisches Personal</option></select></div>
+   <div class="mb-3"><label for="f-schule">Schule / Organisation <span class="opt">(optional)</span></label><input class="form-control" id="f-schule" name="schule"></div>
+   <div class="mb-3"><label for="f-email">E-Mail <span class="opt">(optional, für Rückfragen)</span></label><input class="form-control" id="f-email" name="email" type="email" autocomplete="email"></div>
+   <div class="mb-3"><label for="f-bem">Weitere Bemerkungen <span class="opt">(optional)</span></label><textarea class="form-control" id="f-bem" name="bemerkung" rows="3"></textarea></div>
+   <div class="form-check mb-3"><input class="form-check-input" type="checkbox" id="f-consent" name="consent" required><label class="form-check-label" for="f-consent" style="font-weight:400">Ich bin einverstanden, dass meine Angaben und Antworten zur Weiterentwicklung der SuS-Übersicht ausgewertet werden. *</label></div>
+   <p class="su-priv">Beim Absenden werden deine Angaben und Antworten über Google Formulare an uns übermittelt.</p>
+   <div id="su-fmsg" class="alert" role="alert" hidden></div>
+   <div class="mb-3" id="su-debugwrap" hidden><button type="button" class="btn btn-outline-secondary btn-sm" id="su-debug">Diagnose: Formular mit meinen Antworten vorausfüllen</button> <span class="su-priv">Öffnet dein Google Formular mit genau den Werten, die gesendet würden. Dort siehst du, welche Frage Google ablehnt.</span></div>
+   <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
+    <button type="button" class="btn btn-outline-secondary" data-go="2"><i class="fa fa-chevron-left"></i> Zurück zu den Fragen</button>
+    <button type="submit" class="btn btn-primary" id="su-send"><i class="fa fa-paper-plane"></i> Absenden</button>
+   </div>
+  </form>
+  <div class="su-panel2">
+   <h2>Deine Antworten <span class="su-muted" style="font-weight:400;font-size:13px"><span data-qcount>0</span> von <span data-qtotal>0</span> beantwortet</span></h2>
+   <div id="su-sum"></div>
+   <div class="mt-3 d-flex gap-2 flex-wrap">
+    <button type="button" class="btn btn-outline-secondary btn-sm" data-go="2">Antworten ändern</button>
+    <button type="button" class="btn btn-link btn-sm" id="su-copy">Als Text anzeigen / kopieren</button>
+   </div>
+  </div>
+ </div>
+</div></section>
+
+<div class="su-bar"><div>
+ <button type="button" class="btn btn-outline-secondary" data-go="1"><i class="fa fa-chevron-left"></i> Einstieg</button>
+ <div class="su-bp"><div class="su-bt"><span data-qcount>0</span> von <span data-qtotal>0</span> Fragen beantwortet</div><div class="su-bb"><i id="su-qbar"></i></div></div>
+ <button type="button" class="btn btn-primary" data-go="3">Weiter zum Absenden <i class="fa fa-chevron-right"></i></button>
+</div></div>
+
+
+<script>
+const DATA={"students":[{"id":"s1","name":"Mila Keller","cls":"3a Schule Musterdorf","sem":"Semester 2 (2025-2026)","subjects":[{"name":"Deutsch","avg":"4.75","cert":"5.0","evals":[{"nr":1,"title":"Diktat Frühling","area":"Rechtschreibung","date":"12.02.2026","t":"g","v":"5.0"},{"nr":2,"title":"Aufsatz: Meine Ferien","area":"Schreiben","date":"05.03.2026","t":"g","v":"4.5"},{"nr":3,"title":"Lesetest","area":"Lesen","date":"20.03.2026","t":"p","v":"gut"},{"nr":4,"title":"Referat","area":"Sprechen","date":"28.04.2026","t":"g","v":"5.0"},{"nr":5,"title":"Wortschatz","area":"Sprache im Fokus","date":"14.05.2026","t":"g","v":"4.5"}]},{"name":"Mathematik","avg":"3.83","cert":"4.0","evals":[{"nr":1,"title":"Bruchrechnen","area":"Zahl und Variable","date":"18.02.2026","t":"g","v":"3.5"},{"nr":2,"title":"Geometrie","area":"Form und Raum","date":"11.03.2026","t":"g","v":"4.0"},{"nr":3,"title":"Textaufgaben","area":"Grössen und Daten","date":"22.04.2026","t":"g","v":"3.5"},{"nr":4,"title":"Probe Prozent","area":"Zahl und Variable","date":"13.05.2026","t":"g","v":"4.5"}]},{"name":"Französisch","avg":"5.25","cert":"5.5","evals":[{"nr":1,"title":"Vocabulaire 1","area":"Wortschatz","date":"25.02.2026","t":"g","v":"5.5"},{"nr":2,"title":"Compréhension orale","area":"Hören","date":"19.03.2026","t":"g","v":"5.0"},{"nr":3,"title":"Lettre","area":"Schreiben","date":"07.05.2026","t":"p","v":"sehr gut"}]},{"name":"Englisch","avg":"5.00","cert":"5.0","evals":[{"nr":1,"title":"Unit 5 Test","area":"Grammar","date":"04.03.2026","t":"g","v":"5.0"},{"nr":2,"title":"Presentation","area":"Speaking","date":"16.04.2026","t":"g","v":"5.0"}]},{"name":"Natur, Mensch, Gesellschaft","avg":"5.50","cert":"5.5","evals":[{"nr":1,"title":"Projekt Wald","area":"Natur und Technik","date":"30.03.2026","t":"g","v":"5.5"},{"nr":2,"title":"Test Kantone","area":"Räume, Zeiten, Gesellschaften","date":"05.05.2026","t":"g","v":"5.5"}]},{"name":"Bewegung und Sport","avg":"","cert":"besucht","evals":[{"nr":1,"title":"Leichtathletik","area":"Laufen, Springen, Werfen","date":"21.04.2026","t":"p","v":"gut"},{"nr":2,"title":"Verhalten im Sportunterricht","area":"Fairness","date":"12.05.2026","t":"x","v":"Zeigt Einsatz und unterstützt die Gruppe."}]}],"objectives":[["Deutsch","Kann kurze Texte sinnverstehend lesen","Lesen","12.03.2026","erreicht"],["Deutsch","Schreibt Texte mit Einleitung, Hauptteil, Schluss","Schreiben","26.03.2026","gut erreicht"],["Deutsch","Wendet Rechtschreibregeln an","Sprache im Fokus","15.04.2026","teilweise erreicht"],["Deutsch","Hält einen kurzen Vortrag","Sprechen","28.04.2026","gut erreicht"],["Mathematik","Rechnet mit Brüchen","Zahl und Variable","18.02.2026","teilweise erreicht"],["Mathematik","Berechnet Flächen und Umfang","Form und Raum","11.03.2026","erreicht"],["Mathematik","Löst Textaufgaben mit Prozenten","Grössen und Daten","13.05.2026","nicht erreicht"],["Französisch","Versteht einfache Alltagsdialoge","Hören","19.03.2026","gut erreicht"],["Englisch","Stellt sich und andere vor","Sprechen","16.04.2026","erreicht"],["NMG","Beschreibt Lebensräume im Wald","Natur und Technik","30.03.2026","gut erreicht"],["NMG","Ordnet die Kantone auf der Karte zu","Räume, Zeiten, Gesellschaften","05.05.2026","erreicht"],["Sport","Läuft 10 Minuten ausdauernd","Laufen, Springen, Werfen","21.04.2026","gut erreicht"]],"journal":[["18.05.2026","Positive Beobachtung","Deutsch","Frau Meier","Hat einer Mitschülerin beim Lesen geholfen."],["12.05.2026","Versäumnis","Mathematik","Herr Frei","Hausaufgaben nicht gemacht."],["28.04.2026","Elterngespräch","Allgemein","Frau Meier","Standortgespräch durchgeführt, Ziele für das Semester festgelegt."],["03.03.2026","Verspätung","Allgemein","Herr Frei","10 Minuten zu spät."]],"absences":[["11.05.2026","Krank","Mutter",2,"visiert"],["23.03.2026 – 25.03.2026","Krank","Mutter",9,"zu erledigen"],["09.02.2026","Arzttermin","Vater",2,"zu erledigen"]],"alsv":[{"name":"Kantonaler Bogen (Slider)","kind":"slider","heads":["Einschätzung 1","Einschätzung 2"],"rows":[["Lernbereitschaft",[78,82]],["Selbstständigkeit",[70,74]],["Zusammenarbeit",[88,90]],["Umgangsformen",[92,null]]]},{"name":"Schulinterner Bogen (Symbole)","kind":"sym","heads":["Einschätzung 1"],"rows":[["Pünktlichkeit",["+"]],["Ordnung",["++"]],["Hilfsbereitschaft",["="]],["Konzentration",["-"]]]}],"person":{"Erziehungsberechtigte":[["GV1","Sabine Keller"],["GV2","Thomas Keller"]],"Kontakt":[["Telefon","+41 71 555 12 34"],["E-Mail","familie.keller@example.ch"]],"Adresse":[["","Bahnhofstrasse 12, 9000 St. Gallen"]],"Weitere Angaben":[["Geschlecht","weiblich"],["Nationalität","Schweiz"],["Erstsprache","Deutsch"]]}},{"id":"s2","name":"Noah Berger","cls":"3a Schule Musterdorf","sem":"Semester 2 (2025-2026)","subjects":[{"name":"Deutsch","avg":"3.75","cert":"4.0","evals":[{"nr":1,"title":"Diktat Frühling","area":"Rechtschreibung","date":"12.02.2026","t":"g","v":"3.0"},{"nr":2,"title":"Aufsatz: Meine Ferien","area":"Schreiben","date":"05.03.2026","t":"g","v":"4.0"},{"nr":3,"title":"Lesetest","area":"Lesen","date":"20.03.2026","t":"p","v":"genügend"},{"nr":4,"title":"Referat","area":"Sprechen","date":"28.04.2026","t":"g","v":"4.5"}]},{"name":"Mathematik","avg":"5.50","cert":"5.5","evals":[{"nr":1,"title":"Bruchrechnen","area":"Zahl und Variable","date":"18.02.2026","t":"g","v":"5.5"},{"nr":2,"title":"Geometrie","area":"Form und Raum","date":"11.03.2026","t":"g","v":"6.0"},{"nr":3,"title":"Textaufgaben","area":"Grössen und Daten","date":"22.04.2026","t":"g","v":"5.0"}]},{"name":"Französisch","avg":"3.00","cert":"3.0","evals":[{"nr":1,"title":"Vocabulaire 1","area":"Wortschatz","date":"25.02.2026","t":"g","v":"3.0"},{"nr":2,"title":"Compréhension orale","area":"Hören","date":"19.03.2026","t":"g","v":"3.0"}]},{"name":"Englisch","avg":"4.50","cert":"4.5","evals":[{"nr":1,"title":"Unit 5 Test","area":"Grammar","date":"04.03.2026","t":"g","v":"4.5"}]},{"name":"Natur, Mensch, Gesellschaft","avg":"4.75","cert":"5.0","evals":[{"nr":1,"title":"Projekt Wald","area":"Natur und Technik","date":"30.03.2026","t":"g","v":"5.0"},{"nr":2,"title":"Test Kantone","area":"Räume, Zeiten, Gesellschaften","date":"05.05.2026","t":"g","v":"4.5"}]},{"name":"Bewegung und Sport","avg":"","cert":"besucht","evals":[{"nr":1,"title":"Leichtathletik","area":"Laufen, Springen, Werfen","date":"21.04.2026","t":"p","v":"sehr gut"}]}],"objectives":[["Deutsch","Kann kurze Texte sinnverstehend lesen","Lesen","12.03.2026","teilweise erreicht"],["Deutsch","Wendet Rechtschreibregeln an","Sprache im Fokus","15.04.2026","nicht erreicht"],["Mathematik","Rechnet mit Brüchen","Zahl und Variable","18.02.2026","gut erreicht"],["Mathematik","Berechnet Flächen und Umfang","Form und Raum","11.03.2026","gut erreicht"],["Französisch","Versteht einfache Alltagsdialoge","Hören","19.03.2026","nicht erreicht"],["Sport","Läuft 10 Minuten ausdauernd","Laufen, Springen, Werfen","21.04.2026","gut erreicht"]],"journal":[["20.05.2026","Versäumnis","Deutsch","Frau Meier","Lesebuch vergessen."],["14.05.2026","Versäumnis","Französisch","Frau Roth","Vokabeln nicht gelernt."],["06.05.2026","Verspätung","Allgemein","Herr Frei","15 Minuten zu spät."],["22.04.2026","Positive Beobachtung","Mathematik","Herr Frei","Erklärt Mitschülern schwierige Aufgaben geduldig."]],"absences":[["19.05.2026","Krank","Vater",2,"visiert"]],"alsv":[{"name":"Kantonaler Bogen (Slider)","kind":"slider","heads":["Einschätzung 1","Einschätzung 2"],"rows":[["Lernbereitschaft",[55,60]],["Selbstständigkeit",[48,null]],["Zusammenarbeit",[75,78]],["Umgangsformen",[80,82]]]},{"name":"Schulinterner Bogen (Symbole)","kind":"sym","heads":["Einschätzung 1"],"rows":[["Pünktlichkeit",["-"]],["Ordnung",["="]],["Hilfsbereitschaft",["++"]],["Konzentration",["="]]]}],"person":{"Erziehungsberechtigte":[["GV1","Claudia Berger"]],"Kontakt":[["Telefon","+41 79 555 98 76"],["E-Mail","c.berger@example.ch"]],"Adresse":[["","Seestrasse 3, 9400 Rorschach"]],"Weitere Angaben":[["Geschlecht","männlich"],["Nationalität","Italien"],["Erstsprache","Italienisch"]]}}]};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const PAGE=10,pg={},open=new Set();let cur=0,showGraph=true;
+const root=document.getElementById('su-root'),sel=document.getElementById('stusel');
+DATA.students.forEach((s,i)=>sel.add(new Option(s.name,i)));
+const gradeClass=v=>parseFloat(v)<4?'su-bad':'su-ok';
+const resClass=t=>/nicht/i.test(t)?'su-bad':/teil/i.test(t)?'su-mid':'su-ok';
+const num=v=>parseFloat(String(v).replace(',','.'));
+const table=(head,rows)=>'<table class="table table-striped table-hover table-sm"><tr>'+head.map(h=>'<th>'+h+'</th>').join('')+'</tr>'+rows.join('')+'</table>';
+const pager=(id,total)=>{if(total<=PAGE)return'';const p=pg[id]||1,pages=Math.ceil(total/PAGE);return '<div class="su-pager"><button data-pg="'+id+'" data-d="-1" '+(p<=1?'disabled':'')+'>‹</button><span>'+((p-1)*PAGE+1)+'–'+Math.min(p*PAGE,total)+' von '+total+'</span><button data-pg="'+id+'" data-d="1" '+(p>=pages?'disabled':'')+'>›</button></div>'};
+const slice=(id,arr)=>{const pages=Math.max(1,Math.ceil(arr.length/PAGE));pg[id]=Math.min(pg[id]||1,pages);return arr.slice((pg[id]-1)*PAGE,pg[id]*PAGE)};
+const chip=e=>e.t==='p'?'<span class="su-tag su-pred">'+esc(e.v)+'</span>':e.t==='g'?'<span class="su-tag '+gradeClass(e.v)+'">'+esc(e.v)+'</span>':'<span class="su-tag">Text</span>';
+const graph=ev=>{const g=ev.filter(e=>e.t==='g');if(g.length<2)return'';const w=260,h=60,pts=g.map((e,i)=>[10+i*(w-20)/(g.length-1),h-8-(num(e.v)-1)/5*(h-16)]);return '<svg width="'+w+'" height="'+h+'" role="img" aria-label="Verlaufsgrafik"><polyline fill="none" stroke="#2e8bb5" stroke-width="2" points="'+pts.map(p=>p.join(',')).join(' ')+'"/>'+pts.map((p,i)=>'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="#2e8bb5"><title>'+g[i].v+'</title></circle>').join('')+'</svg>'};
+const V={
+ grades(s){const sj=s.subjects;return {title:'Beurteilungen & Zeugnisnoten',meta:sj.length+' Fächer',href:'<a href="#">Modul öffnen ↗</a>',body:
+  '<label class="su-switch"><input type="checkbox" data-graph '+(showGraph?'checked':'')+'> Verlaufsgrafik anzeigen</label>'+
+  table(['Fach','Beurteilungen','Durchschnitt','Zeugnis',''],sj.map((x,i)=>{
+   const o=open.has(i);
+   let r='<tr class="su-row" data-subj="'+i+'"><td><b>'+esc(x.name)+'</b></td><td>'+x.evals.map(chip).join('')+'</td><td>'+(x.avg||'-')+'</td><td><b>'+esc(x.cert)+'</b></td><td><a href="#">Bearbeiten ↗</a></td></tr>';
+   if(o)r+='<tr class="su-det"><td colspan="5">'+table(['Nr.','Beurteilung','Kompetenzbereich','Datum','Resultat'],x.evals.map(e=>'<tr><td>'+e.nr+'</td><td>'+esc(e.title)+'</td><td>'+esc(e.area)+'</td><td>'+e.date+'</td><td>'+(e.t==='x'?'<div class="su-rich">'+esc(e.v)+'</div>':chip(e)+(e.t==='p'?'':''))+'</td></tr>'))+(showGraph?'<div class="mt-2">'+graph(x.evals)+'</div>':'')+'</td></tr>';
+   return r})) }},
+ objectives(s){const all=s.objectives;return {title:'Lernziele-Resultate',meta:all.length+' Resultate',href:'<a href="#">Modul öffnen ↗</a>',body:table(['Fach','Lernziel','Kompetenzbereich','Datum','Resultat',''],slice('objectives',all).map(o=>'<tr><td>'+esc(o[0])+'</td><td>'+esc(o[1])+'</td><td>'+esc(o[2])+'</td><td>'+o[3]+'</td><td><span class="su-tag '+resClass(o[4])+'">'+esc(o[4])+'</span></td><td><a href="#">Bearbeiten ↗</a></td></tr>'))+pager('objectives',all.length)}},
+ journal(s){const r=s.journal;return {title:'Journal',meta:r.length+' Einträge',href:'<a href="#" class="su-ico">＋</a> <a href="#">Modul öffnen ↗</a>',body:table(['Datum','Kategorie','Fach','Lehrperson',''],slice('journal',r).map(x=>'<tr><td>'+x[0]+'</td><td><b>'+esc(x[1])+'</b><br><span class="su-sub">'+esc(x[4])+'</span></td><td>'+esc(x[2])+'</td><td>'+esc(x[3])+'</td><td><a href="#">Bearbeiten ↗</a></td></tr>'))+pager('journal',r.length)}},
+ absences(s){const r=s.absences,lek=r.reduce((a,x)=>a+x[3],0);return {title:'Absenzen',meta:r.length+' Einträge · '+lek+' Lektionen',href:'<a href="#">Modul öffnen ↗</a>',body:table(['Zeitraum','Grund','Lekt.','Status',''],r.map(x=>'<tr><td>'+x[0]+'</td><td>'+esc(x[1])+'<br><span class="su-sub">gemeldet: '+esc(x[2])+'</span></td><td>'+x[3]+'</td><td><span class="su-tag '+(x[4]==='zu erledigen'?'su-open':'su-ok')+'">'+x[4]+'</span></td><td><a href="#">Bearbeiten ↗</a></td></tr>'))}},
+ alsv(s){const pi=pg.alsvPlan||0,p=s.alsv[pi];return {title:'ALSV',meta:s.alsv.length+' Planungen',href:'<a href="#">Modul öffnen ↗</a>',body:
+  '<select class="form-select mb-2" data-plan>'+s.alsv.map((x,i)=>'<option value="'+i+'" '+(i===pi?'selected':'')+'>'+esc(x.name)+'</option>').join('')+'</select>'+
+  table(['Aspekt'].concat(p.heads),p.rows.map(r=>'<tr><td>'+esc(r[0])+'</td>'+r[1].map(v=>'<td>'+(v==null?'<span class="su-sub">-</span>':p.kind==='slider'?'<input type="range" class="su-ro" min="0" max="100" value="'+v+'" tabindex="-1" title="Wert '+v+' von 100">':'<span class="su-tag su-pred" style="font-weight:700">'+esc(v)+'</span>')+'</td>').join('')+'</tr>'))}},
+ person(s){const kv=Object.entries(s.person).map(([h,rows])=>'<div class="su-kvh">'+h+'</div>'+rows.map(r=>r[0]?'<div class="su-kv"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>':'<div class="su-kv one"><b>'+esc(r[1])+'</b></div>').join('')).join('');return {title:'Stammdaten',meta:'',href:'<a href="#">Modul öffnen ↗</a>',body:'<div class="su-avatar su-pavatar" title="Foto (Platzhalter)">'+s.name.split(' ').map(p=>p[0]).join('')+'</div>'+kv}}
+};
+function card(id,s){const v=V[id](s),col=localStorage.getItem('su-demo-c-'+id)==='1';return '<div class="su-card '+(col?'su-collapsed':'')+'" data-card="'+id+'"><h3 data-toggle title="Karte ein- oder ausklappen"><span class="su-chev2">▾</span><span class="su-ttl">'+v.title+(v.meta?' <small>'+v.meta+'</small>':'')+'</span>'+v.href+'</h3><div class="su-body">'+v.body+'</div></div>'}
+function glance(s){const sj=s.subjects.filter(x=>x.avg),low=sj.filter(x=>num(x.avg)<4),bad=s.objectives.filter(o=>/nicht|teil/i.test(o[4])),open=s.absences.filter(a=>a[4]==='zu erledigen'),lek=s.absences.reduce((a,x)=>a+x[3],0),warn=s.journal.filter(j=>/Vers/.test(j[1]));
+ const c=[];c.push([low.length?'bad':'neutral',low.length?'Beurteilungen: '+low.length+' von '+sj.length+' Fächern unter 4':'Beurteilungen: '+sj.length+' Fächer','grades',low.map(x=>x.name+' '+x.avg).join('\n')]);
+ c.push([bad.length?'mid':'neutral',bad.length?'Lernziele: '+bad.length+' von '+s.objectives.length+' nicht oder teilweise erreicht':'Lernziele: '+s.objectives.length+' Resultate','objectives','']);
+ c.push([open.length?'mid':'neutral','Absenzen: '+s.absences.length+' · '+lek+' Lektionen'+(open.length?' · '+open.length+' zu erledigen':''),'absences','']);
+ c.push([warn.length?'mid':'neutral','Journal: '+s.journal.length+' Einträge'+(warn.length?' · '+warn.length+' Versäumnis(se)/Verspätung(en)':''),'journal','']);
+ const rank={bad:0,mid:1,neutral:2};c.sort((a,b)=>rank[a[0]]-rank[b[0]]);
+ return '<div class="su-glance"><span class="su-gl">Auf einen Blick</span>'+c.map(x=>'<button class="su-chip '+x[0]+'" data-goto="'+x[2]+'" title="'+esc(x[3]||'Zur zugehörigen Karte springen')+'">'+esc(x[1])+'</button>').join('')+'</div>'}
+function render(){const s=DATA.students[cur];sel.value=cur;document.getElementById('su-prev').disabled=cur<=0;document.getElementById('su-next').disabled=cur>=DATA.students.length-1;
+ root.innerHTML=glance(s)+
+ '<div class="su-grid"><div>'+['grades','objectives','alsv'].map(i=>card(i,s)).join('')+'</div><div>'+['absences','journal','person'].map(i=>card(i,s)).join('')+'</div></div>'}
+function repaint(id){const s=DATA.students[cur],el=root.querySelector('[data-card="'+id+'"]');el.outerHTML=card(id,s)}
+sel.onchange=()=>{cur=+sel.value;open.clear();Object.keys(pg).forEach(k=>delete pg[k]);render()};
+document.getElementById('su-prev').onclick=()=>{if(cur>0){cur--;sel.onchange.call(null);}};
+document.getElementById('su-next').onclick=()=>{if(cur<DATA.students.length-1){cur++;open.clear();Object.keys(pg).forEach(k=>delete pg[k]);render()}};
+document.getElementById('su-prev').onclick=()=>{if(cur>0){cur--;open.clear();Object.keys(pg).forEach(k=>delete pg[k]);render()}};
+root.addEventListener('click',e=>{const t=e.target;
+ if(t.closest('a')){e.preventDefault();return}
+ const go=t.closest('[data-goto]');if(go){const c=root.querySelector('[data-card="'+go.dataset.goto+'"]');c.classList.remove('su-collapsed');localStorage.setItem('su-demo-c-'+go.dataset.goto,'0');c.scrollIntoView({behavior:'smooth',block:'start'});const h=c.querySelector('h3');h.classList.add('su-flash');setTimeout(()=>h.classList.remove('su-flash'),1700);return}
+ const pb=t.closest('[data-pg]');if(pb){pg[pb.dataset.pg]=(pg[pb.dataset.pg]||1)+(+pb.dataset.d);repaint(pb.dataset.pg);return}
+ const h=t.closest('h3[data-toggle]');if(h){const c=h.parentElement;c.classList.toggle('su-collapsed');localStorage.setItem('su-demo-c-'+c.dataset.card,c.classList.contains('su-collapsed')?'1':'0');return}
+ const row=t.closest('tr[data-subj]');if(row){const i=+row.dataset.subj;open.has(i)?open.delete(i):open.add(i);repaint('grades');return}
+});
+document.getElementById('su-printbtn').onclick=()=>openDialog(DATA.students[cur]);
+root.addEventListener('change',e=>{if(e.target.matches('[data-graph]')){showGraph=e.target.checked;repaint('grades')}if(e.target.matches('[data-plan]')){pg.alsvPlan=+e.target.value;repaint('alsv')}});
+function openDialog(s){
+ document.getElementById('su-dialog')?.remove();
+ const withData=s.subjects.filter(x=>x.evals.length).map((x,i)=>({id:i,name:x.name,objs:s.objectives.filter(o=>o[0]===x.name||(x.name.startsWith('Natur')&&o[0]==='NMG')||(x.name.startsWith('Bewegung')&&o[0]==='Sport'))}));
+ const withObjs=withData.filter(x=>x.objs.length);
+ const OUT=[
+  {id:'summary',group:'Gesamt',title:'Gesamtübersicht',desc:'Alle Informationen in einem Dokument'},
+  {id:'overview',group:'Beurteilungen',title:'Beurteilungsübersicht',desc:'Fach, Durchschnitt und Zeugnisnote auf einer Seite'},
+  {id:'portfolio',group:'Beurteilungen',title:'Portfolio Beurteilungen',desc:'Noten, Prädikate und Texte pro Fach'},
+  {id:'objectives',group:'Beurteilungen',title:'Portfolio Lernziele',desc:'Lernziele mit Resultaten pro Fach'},
+  {id:'journal',group:'Schulalltag',title:'Journal',desc:'Journalauszug oder Bestätigung'},
+  {id:'absences',group:'Schulalltag',title:'Absenzen',desc:'Zusammenfassung oder detailliert'},
+  {id:'alsv',group:'Überfachlich',title:'ALSV',desc:'Arbeits-, Lern- und Sozialverhalten'}];
+ let seq=0;
+ const cbx=(attrs,label,on,cls="")=>{const id="su-cb-"+(++seq);return `<div class="form-check su-opt"><input class="form-check-input ${cls}" type="checkbox" id="${id}" ${attrs} ${on?"checked":""}><label class="form-check-label" for="${id}">${label}</label></div>`};
+ const rbx=(name,attrs,value,label,on)=>{const id="su-rb-"+(++seq);return `<div class="form-check su-opt"><input class="form-check-input" type="radio" name="${name}" id="${id}" value="${value}" ${attrs} ${on?"checked":""}><label class="form-check-label" for="${id}">${label}</label></div>`};
+ const chk=(k,label,on)=>cbx(`data-k="${k}"`,label,on);
+ const rad=(k,v,label,on)=>rbx(k,`data-k="${k}"`,v,label,on);
+ const sec=(t,b)=>`<div class="su-sub2">${t}</div>${b}`;
+ const sigs=sec('Unterschrift(en) drucken',chk('sigStu','Lernende*r',false)+chk('sigLegal','Gesetzliche Vertreter',false)+chk('sigTeacher','Lehrperson',false));
+ const picker=(list,withCount)=>`<div class="su-pick">${cbx("data-all",'<b>Alle Fächer</b> <span class="su-sub">('+list.length+')</span>',true)}<div class="su-picklist">${list.map(x=>cbx(`data-id="${x.id}"`,esc(x.name)+(withCount?` <span class="su-sub">(${x.objs.length})</span>`:''),true,"sj")).join('')}</div></div>`;
+ const plans=s.alsv;
+ const panels={
+  summary:'<div class="row"><div class="col-md-6">'+sec('Bereiche',chk('grades','Beurteilungen und Zeugnisnoten',true)+chk('objectives','Lernziele-Resultate',true)+chk('journal','Journal',true)+chk('absences','Absenzen',true)+chk('alsv','ALSV',true)+chk('person','Stammdaten',true))+'<div data-dep="grades">'+sec('Beurteilungen',chk('cert','Zeugnisnoten anzeigen',true)+chk('avg','Durchschnitt der Noten anzeigen',true)+chk('evaluations','Noten',true)+chk('observations','Prädikate',true)+chk('text_evaluation','Texte',true)+chk('detail','Einzelbeurteilungen pro Fach auflisten',false)+chk('include_competence_area_column','Spalte Kompetenzbereiche anzeigen',false)+chk('one_subject_per_page','Ein Fach pro Seite (Einzelbeurteilungen)',false)+chk('skip_empty_subjects','Fächer ohne Beurteilungen überspringen',true))+'</div></div><div class="col-md-6"><div>'+sec('Fächer (Beurteilungen und Lernziele)',picker(withData,false))+'</div><div data-dep="journal">'+sec('Journal',chk('print_status','Status drucken',false)+chk('print_public_notes','Öffentliche Notizen drucken',true)+chk('print_internal_notes','Interne Notizen drucken',false)+chk('print_empty_page','Leere Seite drucken',false))+'</div><div data-dep="absences">'+sec('Absenzen',rad('sat','summary','Zusammenfassung',true)+rad('sat','detailed_absences','Detailliert',false))+'</div><div data-dep="alsv">'+sec('ALSV - Einschätzungen',plans[0].heads.map((h,i)=>chk('alsvc'+i,esc(h),true)).join(''))+'</div>'+sigs+'</div></div>',
+  overview:sec('Inhalt',chk('cert','Zeugnisnoten anzeigen',true)+chk('avg','Durchschnitt der Noten anzeigen',true)+chk('first','1. Semester einbeziehen',false))+sigs,
+  portfolio:sec('Inhalt',chk('evaluations','Noten',true)+chk('observations','Prädikate',true)+chk('text_evaluation','Texte',true))+sec('Fächer',picker(withData,false))+sec('Layout',chk('one_subject_per_page','Ein Fach pro Seite',false)+chk('skip_empty_subjects','Fächer ohne Beurteilungen überspringen',true))+`<details class="su-more"><summary>Weitere Optionen</summary>${chk('show_graph','Verlaufsgrafik drucken',true)+chk('show_table','Tabelle mit den Beurteilungen drucken',true)+chk('show_competence','Übersicht der Kompetenzbereiche drucken',false)+chk('include_competence_area_column','Spalte Kompetenzbereiche anzeigen',false)+chk('class_average','Klassendurchschnitt anzeigen',false)+chk('table_average','Durchschnitt unter der Tabelle anzeigen',false)+chk('include_boxplot_legend','Legende für Boxplots drucken',false)+chk('include_first_semester_evaluation','1. Semester einbeziehen',false)}</details>`+sigs,
+  objectives:sec('Fächer mit Lernzielen',withObjs.length?picker(withObjs,true):'<div class="su-note">Keine Lernziel-Resultate im Semester.</div>')+sigs,
+  journal:sec('Art',rad('jt','journal_abstract','Journalauszug',true)+rad('jt','report_card','Zeugnis-Journal',false)+rad('jt','confirmation_of_parental_talk','Bestätigung Elterngespräch',false))+sec('Optionen',chk('print_status','Status drucken',false)+chk('print_public_notes','Öffentliche Notizen',true)+chk('print_internal_notes','Interne Notizen',false)+chk('print_empty_page','Leere Seite',false))+sec('Unterschrift(en) drucken',chk('student','Lernende*r',false)+chk('parents','Eltern',false)+chk('teacher','Lehrperson',false)),
+  absences:sec('Art',rad('at','summary','Zusammenfassung',true)+rad('at','detailed_absences','Detailliert',false)),
+  alsv:sec('Planung','<select class="form-select" data-av-plan>'+plans.map((x,i)=>'<option value="'+i+'">'+esc(x.name)+'</option>').join('')+'</select>')+sec('Ausgabe',cbx('data-av="output" value="single_student"','Einzelne Person',true)+cbx('data-av="output" value="cantonal_alsv"','Kantonaler ALSV-Bogen',false))+sec('Einschätzungen','<span data-ass></span>')+sec('Optionen',cbx('data-av="option" value="comments"','Kommentare drucken',true)+cbx('data-av="option" value="indicators"','Indikatoren drucken',false))+sec('Ausgefüllt von',rbx('av-persp','data-av="perspective"','teacher','Lehrperson',true)+rbx('av-persp','data-av="perspective"','student','Lernende*r',false))};
+ const groups=[...new Set(OUT.map(o=>o.group))];
+ const dlg=document.createElement('div');dlg.id='su-dialog';
+ dlg.innerHTML=`<div class="su-box su-wide"><div class="su-dh"><div><div>Drucken</div><div class="su-sub">${esc(s.name)} · ${esc(s.cls)} · ${esc(s.sem)}</div></div><button data-close>×</button></div>
+ <div class="su-md"><div class="su-list">${groups.map(g=>`<div class="su-grp2">${g}</div>`+OUT.filter(o=>o.group===g).map(o=>`<div class="su-tile" data-tile="${o.id}"><div class="su-pickbox">${cbx(`data-pick="${o.id}"`,'',false)}</div><div><div class="t">${o.title}</div><div class="d">${o.desc}</div><div class="c" data-chip="${o.id}"></div></div></div>`).join('')).join('')}</div>
+ <div class="su-panels">${OUT.map(o=>`<div class="su-panel" data-panel="${o.id}" hidden><h4>${o.title}</h4>${panels[o.id]}</div>`).join('')}</div></div>
+ <div class="su-df"><span class="su-msg" id="su-msg"></span><div><button class="btn btn-secondary" data-close>Abbrechen</button> <button class="btn btn-primary" id="su-go"><i class="fa fa-print"></i> <span id="su-golabel">Drucken</span></button></div></div></div>`;
+ document.body.appendChild(dlg);
+ dlg.querySelectorAll('.su-dh [data-close]').forEach(b=>b.title='Schliessen (Esc)');
+ dlg.querySelectorAll('.su-df [data-close]').forEach(b=>b.title='Dialog schliessen, ohne zu drucken');
+ dlg.querySelector('#su-go').title='Gewählte Ausgaben als PDF öffnen (Demo: nicht aktiv)';
+ dlg.querySelectorAll('.su-tile').forEach(x=>x.title='Ausgabe auswählen und Optionen anzeigen');
+ const close=()=>{dlg.remove();document.removeEventListener('keydown',onKey)};const onKey=e=>{if(e.key==='Escape')close()};document.addEventListener('keydown',onKey);
+ const q=sel=>dlg.querySelector(sel),qa=sel=>[...dlg.querySelectorAll(sel)],P=id=>q(`[data-panel="${id}"]`);
+ const val=(id,k)=>P(id).querySelector(`[data-k="${k}"]`).checked?1:0;
+ const subjIds=id=>[...P(id).querySelectorAll('.sj:checked')].map(i=>+i.dataset.id);
+ const fillAss=pi=>{P('alsv').querySelector('[data-ass]').outerHTML='<span data-ass>'+plans[pi].heads.map((h,i)=>cbx('data-av="assessment" value="'+i+'"',esc(h),i===0)).join('')+'</span>'};
+ fillAss(0);
+ const chipText={
+  summary:()=>['grades','objectives','journal','absences','alsv','person'].filter(k=>val('summary',k)).length+' von 6 Bereichen',
+  overview:()=>[val('overview','cert')?'Zeugnisnoten':'',val('overview','avg')?'Durchschnitt':''].filter(Boolean).join(' · ')||'Nur Beurteilungen',
+  portfolio:()=>[val('portfolio','evaluations')?'Noten':'',val('portfolio','observations')?'Prädikate':'',val('portfolio','text_evaluation')?'Texte':''].filter(Boolean).join(', ')+' · '+subjIds('portfolio').length+' Fächer',
+  objectives:()=>subjIds('objectives').length+' Fächer',
+  journal:()=>({journal_abstract:'Journalauszug',report_card:'Zeugnis-Journal',confirmation_of_parental_talk:'Bestätigung Elterngespräch'})[P('journal').querySelector('input[name=jt]:checked').value],
+  absences:()=>P('absences').querySelector('input[name=at]:checked').value==='summary'?'Zusammenfassung':'Detailliert',
+  alsv:()=>P('alsv').querySelectorAll('[data-av=assessment]:checked').length+' Einschätzung(en)'};
+ const refresh=()=>{OUT.forEach(o=>{q(`[data-chip="${o.id}"]`).textContent=chipText[o.id]();q(`[data-tile="${o.id}"]`).classList.toggle('on',q(`[data-pick="${o.id}"]`).checked)});const n=qa('[data-pick]:checked').length;q('#su-golabel').textContent=n?`Drucken (${n})`:'Drucken';q('#su-go').disabled=!n};
+ const focus=id=>{qa('.su-panel').forEach(p=>{p.hidden=p.dataset.panel!==id});qa('.su-tile').forEach(t=>t.classList.toggle('focus',t.dataset.tile===id))};
+ const autoPick=t=>{const panel=t.closest('.su-panel');if(panel)q(`[data-pick="${panel.dataset.panel}"]`).checked=true};
+ dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.hasAttribute('data-close')){close();return}const tile=e.target.closest('[data-tile]');if(tile)focus(tile.dataset.tile)});
+ dlg.addEventListener('change',e=>{const t=e.target;
+  if(t.hasAttribute('data-av-plan')){fillAss(+t.value);autoPick(t);refresh();return}
+  if(t.hasAttribute('data-pick')){if(t.checked)focus(t.closest('[data-tile]').dataset.tile)}
+  else if(t.hasAttribute('data-all')){t.closest('.su-pick').querySelectorAll('.sj').forEach(i=>{i.checked=t.checked});autoPick(t)}
+  else{if(t.classList.contains('sj')){const pick=t.closest('.su-pick');pick.querySelector('[data-all]').checked=[...pick.querySelectorAll('.sj')].every(i=>i.checked)}autoPick(t)}
+  q('#su-msg').textContent='';refresh()});
+ const syncDeps=()=>{const sp=P('summary');['grades','journal','absences','alsv'].forEach(k=>{const on=sp.querySelector('[data-k="'+k+'"]').checked;sp.querySelectorAll('[data-dep="'+k+'"]').forEach(w=>{w.style.opacity=on?'':'.45';w.querySelectorAll('input').forEach(i=>{i.disabled=!on})})})};
+ dlg.addEventListener('change',e=>{if(e.target.closest('[data-panel="summary"]'))syncDeps()});syncDeps();
+ q('[data-pick="overview"]').checked=true;focus('overview');refresh();
+ q('#su-go').onclick=()=>{const n=qa('[data-pick]:checked').length;q('#su-msg').textContent='Demo: Hier würden '+n+' PDF-Dokument(e) in neuen Tabs geöffnet.'};
+}
+
+
+/* ===== Feedback-Fragen (Fragezeichen mit Mouseover + Antwortfeld) ===== */
+/* ===== KONFIGURATION: Google Formular =====
+   formUrl: URL des Formulars, aber mit /formResponse am Ende (statt /viewform), z. B.
+            https://docs.google.com/forms/d/e/1FAIpQLSc.../formResponse
+   questionEntries: je Frage die Feldnummer im Format 'entry.123456789'.
+   entries: Feldnummern der Angaben auf Seite 3 (nur ausfüllen, was es im Formular gibt).
+   requireAll: false = mindestens eine Frage genügt (dann dürfen die Fragen im Google Formular NICHT «erforderlich» sein); true = alle Fragen müssen beantwortet sein. */
+const CONFIG={
+ formUrl:'https://docs.google.com/forms/d/e/1FAIpQLScTastDq-bbOcIA0QKu_4Nuc98aMmNPlnAO_uBw0yjd2zNxWg/formResponse',
+ requireAll:false,
+ entries:{name:'entry.1580767179',rolle:'entry.1404908306',schule:'entry.2079481279',email:'entry.1705372908',bemerkung:'entry.948542095'},
+ questionEntries:{filters:'entry.568353416',glance:'entry.1180825787',h_grades:'entry.1291721308',c_grades:'entry.1462384090',h_alsv:'entry.1797278515',h_absences:'entry.2073000805',c_absences:'entry.584018935',h_journal:'entry.1201438720',j_comments:'entry.1404723689',j_columns:'entry.1146625890',h_person:'entry.1802335337'}
+};
+/* type: 'yesno' | 'single' | 'multi' | 'text'; other:true = Auswahl «Sonstiges» mit Textfeld */
+const QUESTIONS={
+ filters:{l:'Filter',type:'yesno',t:'Möchtest du zwischen deinen Einträgen/Noten und allen unterscheiden können?'},
+ glance:{l:'Auf einen Blick',type:'single',opts:['Durchschnitte unter 4','zu erledigende Absenzen','Schulabsentismuswarnung','Häufigste Journalkategorie'],other:true,t:'Was soll bei auf einen Blick reinkommen?'},
+ h_grades:{l:'Beurteilungen und Zeugnisnoten I',type:'text',t:'Möchtest du alle Fächer aufgelistet haben? Auch vermeintlich weniger wichtige Fächer wie Sport oder Musik oder auch das eher unbedeutende Freifach? Wenn nein, wie würdest du es begrenzen?'},
+ c_grades:{l:'Beurteilungen & Zeugnisnoten II',type:'yesno',t:'Momentan sieht man die Beurteilungen nach Fach getrennt und nur, wenn man auf das Fach klickt. Fändest du ein Widget sinnvoll, bei dem z. B. einfach die letzten 10 bzw. 20 Beurteilungsanlässe aufgeführt sind?'},
+ h_alsv:{l:'ALSV',type:'yesno',t:'Möchtest du nach Einschätzungen filtern können?'},
+ h_absences:{l:'Absenzen I',type:'text',t:'Macht es Sinn, alle Absenzen anzuzeigen, oder möchtest du sie begrenzen auf gewisse Status oder eine Dauer?'},
+ c_absences:{l:'Absenzen II',type:'yesno',t:'Muss man in einer Übersicht wissen, von wem die Absenz erfasst wurde?'},
+ h_journal:{l:'Journal I',type:'single',opts:['Anzahl','Kategorie','Zeitraum','Gar keine Begrenzung'],other:true,t:'Gerade bei SuS mit vielen Journaleinträgen kommt man hier an die Grenzen. Wenn die Liste 30 Einträge hat, wird sie unübersichtlich. Wie würdest du die Anzahl begrenzen? Nach Kategorie, nach Datum oder nach Anzahl?'},
+ j_comments:{l:'Journal II',type:'yesno',t:'Sollen die Kommentare angezeigt werden? Gerade wenn ein langer Kommentar verfasst wurde, kann es die Tabelle enorm auseinanderziehen.'},
+ j_columns:{l:'Journal III',type:'multi',opts:['Datum','Kategorie','Unterkategorie','Fach','Lehrperson','Status'],other:true,t:'Welche Spalten findest du für eine schnelle Übersicht wichtig?'},
+ h_person:{l:'Stammdaten',type:'text',t:'Welche Stammdaten fehlen aus deiner Sicht noch?'}
+};
+const QKEY='su-demo-q2-',qmem={};
+const qGet=id=>{try{return localStorage.getItem(QKEY+id)||''}catch(e){return qmem[id]||''}};
+const qSet=(id,v)=>{try{v?localStorage.setItem(QKEY+id,v):localStorage.removeItem(QKEY+id)}catch(e){v?qmem[id]=v:delete qmem[id]}};
+function qParse(id){const raw=qGet(id);if(!raw)return null;if(QUESTIONS[id].type==='text')return raw;try{return JSON.parse(raw)}catch(e){return null}}
+function qText(id){const v=qParse(id);if(!v)return '';if(QUESTIONS[id].type==='text')return v;const parts=[...v.s];if(v.o!==null&&v.o!==undefined)parts.push('Sonstiges: '+v.o);return parts.join(', ')}
+const qCount=()=>Object.keys(QUESTIONS).filter(k=>qGet(k)).length;
+function qPaint(b){const a=!!qGet(b.dataset.q);b.classList.toggle('done',a);b.textContent=a?'✓':'?'}
+function qBadge(id,abs){const b=document.createElement('span');b.className='su-q'+(abs?' abs':'');b.dataset.q=id;b.tabIndex=0;b.setAttribute('role','button');b.setAttribute('aria-label','Feedback-Frage zu diesem Bereich');qPaint(b);return b}
+function qRefresh(){document.querySelectorAll('.su-q').forEach(qPaint);const n=qCount(),tot=Object.keys(QUESTIONS).length;
+ document.querySelectorAll('[data-qcount]').forEach(e=>e.textContent=n);document.querySelectorAll('[data-qtotal]').forEach(e=>e.textContent=tot);
+ const bar=document.getElementById('su-qbar');if(bar)bar.style.width=(n/tot*100)+'%'}
+function decorate(){
+ root.querySelectorAll('.su-q').forEach(b=>b.remove());
+ if(root.querySelector('.su-glance')){const b=qBadge('glance',true);b.style.left='-26px';b.style.top='17px';root.appendChild(b)}
+ [['grades','h_grades'],['absences','h_absences'],['journal','h_journal'],['person','h_person'],['alsv','h_alsv']].forEach(([c,q])=>{const t=root.querySelector('[data-card="'+c+'"] h3 .su-ttl');if(t)t.appendChild(qBadge(q))});
+ const gr=[...root.querySelectorAll('[data-card="grades"] tr.su-row')],g=gr[4]||gr[gr.length-1];if(g)g.children[1].appendChild(qBadge('c_grades'));
+ const ar=[...root.querySelectorAll('[data-card="absences"] tr')].filter(r=>r.querySelector('td')),a=ar[ar.length-1];if(a)a.children[1].appendChild(qBadge('c_absences'));
+ const jr=[...root.querySelectorAll('[data-card="journal"] tr')].filter(r=>r.querySelector('td'));
+ const jt=jr[2],jl=jr[3];
+ if(jt)jt.children[1].appendChild(qBadge('j_comments'));
+ if(jl&&jl!==jt)jl.children[3].appendChild(qBadge('j_columns'));
+}
+let pop=null;
+const tip=document.createElement('div');tip.className='su-qtip';document.body.appendChild(tip);
+function showTip(b){const id=b.dataset.q,q=QUESTIONS[id];if(!q)return;const a=qText(id),short=a.length>70?a.slice(0,70)+'…':a;
+ tip.innerHTML=esc(q.t)+'<small>'+(a?'✓ '+esc(short)+' – klicken zum Ändern':'Klicken, um zu antworten')+'</small>';tip.style.display='block';
+ const r=b.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;let l=r.left+r.width/2-w/2,tp=r.top-h-8;l=Math.max(8,Math.min(l,innerWidth-w-8));if(tp<8)tp=r.bottom+8;
+ tip.style.left=(l+scrollX)+'px';tip.style.top=(tp+scrollY)+'px'}
+function hideTip(){tip.style.display='none'}
+function closePop(){if(pop){pop.remove();pop=null}}
+function openPop(b){
+ const id=b.dataset.q,q=QUESTIONS[id];if(!q)return;
+ if(pop&&pop.dataset.for===id){closePop();return}
+ closePop();hideTip();
+ pop=document.createElement('div');pop.className='su-qpop';pop.dataset.for=id;
+ const cur=qParse(id);let body='';
+ if(q.type==='text')body='<textarea class="form-control" rows="4" placeholder="Deine Antwort …">'+esc(cur||'')+'</textarea>';
+ else{
+  const kind=q.type==='multi'?'checkbox':'radio',opts=q.type==='yesno'?['Ja','Nein']:q.opts;
+  body='<div class="su-qopts">'+opts.map(o=>'<label><input type="'+kind+'" name="qa" value="'+esc(o)+'"'+(cur&&cur.s.includes(o)?' checked':'')+'> '+esc(o)+'</label>').join('');
+  if(q.other)body+='<label><input type="'+kind+'" name="qa" value="__other__"'+(cur&&cur.o!=null?' checked':'')+'> Sonstiges:</label><input type="text" class="form-control form-control-sm su-qother" placeholder="Bitte angeben" value="'+esc((cur&&cur.o)||'')+'">';
+  body+='</div>';
+ }
+ pop.innerHTML='<div class="su-qh"><span>'+esc(q.l)+'</span><button type="button" class="su-qx" aria-label="Schliessen">×</button></div><div class="su-qt">'+esc(q.t)+'</div>'+body+'<div class="su-qerr" hidden></div><div class="su-qf"><span class="su-qs">'+(q.type==='text'?'Ctrl+Enter = speichern':'')+'</span><div><button type="button" class="btn btn-sm btn-secondary" data-cancel>Abbrechen</button> <button type="button" class="btn btn-sm btn-primary" data-save>Speichern</button></div></div>';
+ document.body.appendChild(pop);
+ const r=b.getBoundingClientRect(),w=pop.offsetWidth,h=pop.offsetHeight;let l=r.left+r.width/2-w/2,tp=r.bottom+8;
+ l=Math.max(8,Math.min(l,innerWidth-w-8));if(tp+h>innerHeight-8)tp=r.top-h-8;if(tp<8)tp=8;
+ pop.style.left=(l+scrollX)+'px';pop.style.top=(tp+scrollY)+'px';
+ const save=()=>{
+  const err=pop.querySelector('.su-qerr');err.hidden=true;
+  if(q.type==='text')qSet(id,pop.querySelector('textarea').value.trim());
+  else{
+   const on=[...pop.querySelectorAll('input[name=qa]:checked')],s=on.filter(i=>i.value!=='__other__').map(i=>i.value),hasO=on.some(i=>i.value==='__other__'),ot=q.other?pop.querySelector('.su-qother').value.trim():'';
+   if(hasO&&!ot){err.textContent='Bitte bei «Sonstiges» etwas eintragen.';err.hidden=false;return}
+   qSet(id,(s.length||hasO)?JSON.stringify({s,o:hasO?ot:null}):'');
+  }
+  qRefresh();closePop()};
+ pop.querySelector('.su-qx').onclick=closePop;pop.querySelector('[data-cancel]').onclick=closePop;pop.querySelector('[data-save]').onclick=save;
+ const ta=pop.querySelector('textarea'),oth=pop.querySelector('.su-qother');
+ if(ta){ta.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();save()}});ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}
+ else{
+  if(oth){oth.addEventListener('input',()=>{pop.querySelector('input[value="__other__"]').checked=true});oth.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();save()}})}
+  (pop.querySelector('input[name=qa]:checked')||pop.querySelector('input[name=qa]')).focus();
+ }
+}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.su-q');
+ if(b){e.preventDefault();e.stopPropagation();openPop(b);return}
+ if(pop&&!e.target.closest('.su-qpop'))closePop()},true);
+document.addEventListener('mouseover',e=>{const b=e.target.closest&&e.target.closest('.su-q');if(b&&!pop)showTip(b)});
+document.addEventListener('mouseout',e=>{if(e.target.closest&&e.target.closest('.su-q'))hideTip()});
+document.addEventListener('focusin',e=>{const b=e.target.closest&&e.target.closest('.su-q');if(b&&!pop)showTip(b)});
+document.addEventListener('focusout',e=>{if(e.target.closest&&e.target.closest('.su-q'))hideTip()});
+document.addEventListener('keydown',e=>{
+ const b=e.target.closest&&e.target.closest('.su-q');
+ if(b&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openPop(b);return}
+ if(e.key==='Escape'){const m=document.querySelector('.su-qmodal');if(m)m.remove();else closePop()}});
+window.addEventListener('resize',()=>{closePop();hideTip()});
+function exportText(withPerson){
+ const keys=Object.keys(QUESTIONS).filter(k=>qGet(k)),out=['SuS-Übersicht – Feedback ('+keys.length+'/'+Object.keys(QUESTIONS).length+' Fragen beantwortet)',''];
+ if(withPerson){const f=document.getElementById('su-form');[['Name','name'],['Rolle','rolle'],['Schule / Organisation','schule'],['E-Mail','email'],['Bemerkung','bemerkung']].forEach(([l,n])=>{const v=f.elements[n].value.trim();if(v)out.push(l+': '+v)});out.push('')}
+ keys.forEach(k=>{out.push(QUESTIONS[k].l);out.push('Frage: '+QUESTIONS[k].t);out.push('Antwort: '+qText(k));out.push('')});
+ return out.join('\n')}
+function showExport(title,intro){
+ const m=document.createElement('div');m.className='su-qmodal';
+ m.innerHTML='<div class="su-qbox"><div class="su-qmh"><b>'+esc(title)+'</b><button type="button" class="su-qx" aria-label="Schliessen">×</button></div>'+(intro?'<p style="margin:12px 20px 0" class="su-muted">'+esc(intro)+'</p>':'')+'<textarea class="form-control" readonly></textarea><div class="su-qmf"><button type="button" class="btn btn-secondary" data-close>Schliessen</button><button type="button" class="btn btn-primary" data-copy>Kopieren</button></div></div>';
+ document.body.appendChild(m);const ta=m.querySelector('textarea');ta.value=exportText(true);
+ m.addEventListener('click',ev=>{if(ev.target===m||ev.target.hasAttribute('data-close')||ev.target.classList.contains('su-qx'))m.remove()});
+ m.querySelector('[data-copy]').onclick=ev=>{ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(x){}
+  if(!ok&&navigator.clipboard)navigator.clipboard.writeText(ta.value).catch(()=>{});ev.target.textContent='Kopiert ✓'};
+}
+{const fb=qBadge('filters',true);fb.style.left='1px';fb.style.top='22px';document.querySelector('.demo-filters').appendChild(fb)}
+const _render=render,_repaint=repaint;
+render=function(){_render();decorate();qRefresh()};
+repaint=function(id){_repaint(id);decorate();qRefresh()};
+
+
+/* ===== Seiten-Navigation, Zusammenfassung, Absenden ===== */
+let step=1;
+function renderSummary(){
+ document.getElementById('su-sum').innerHTML=Object.keys(QUESTIONS).map(k=>{const a=qText(k);
+  return '<div class="su-sumitem"><div class="su-sl">'+esc(QUESTIONS[k].l)+' <a href="#" data-qgo="'+k+'">'+(a?'ändern':'beantworten')+'</a></div><div'+(a?'':' class="su-open"')+'>'+(a?esc(a).replace(/\n/g,'<br>'):'nicht beantwortet')+'</div></div>'}).join('')}
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('[data-qgo]');if(!a)return;e.preventDefault();go(2);
+ const b=document.querySelector('.su-q[data-q="'+a.dataset.qgo+'"]');if(b){b.scrollIntoView({block:'center'});openPop(b)}});
+function go(n){
+ closePop();hideTip();step=n;
+ [1,2,3].forEach(i=>document.getElementById('pg'+i).hidden=i!==n);
+ document.body.classList.toggle('pg2',n===2);
+ document.querySelectorAll('[data-stepbtn]').forEach(b=>{const i=+b.dataset.stepbtn;b.classList.toggle('on',i===n);b.classList.toggle('done',i<n)});
+ if(n===3)renderSummary();window.scrollTo(0,0)}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-go]');if(b){e.preventDefault();go(+b.dataset.go)}});
+document.getElementById('su-copy').onclick=()=>showExport('Antworten als Text');
+const fForm=document.getElementById('su-form'),fMsg=document.getElementById('su-fmsg'),fSend=document.getElementById('su-send');
+function fShow(txt,kind){fMsg.className='alert alert-'+kind;fMsg.textContent=txt;fMsg.hidden=false}
+function buildPayload(){
+ const v=n=>fForm.elements[n].value.trim(),d={name:v('name'),rolle:v('rolle'),schule:v('schule'),email:v('email'),bemerkung:v('bemerkung')};
+ const p=new URLSearchParams();
+ Object.entries(CONFIG.entries).forEach(([k,id])=>{if(id&&d[k])p.append(id,d[k])});
+ Object.entries(CONFIG.questionEntries).forEach(([k,id])=>{
+  if(!id)return;const q=QUESTIONS[k],val=qParse(k);if(!val)return;
+  if(q.type==='text'){p.append(id,val);return}
+  val.s.forEach(x=>p.append(id,x));
+  if(val.o!==null&&val.o!==undefined){p.append(id,'__other_option__');p.append(id+'.other_option_response',val.o)}});
+ return p}
+fForm.addEventListener('submit',async e=>{
+ e.preventDefault();fMsg.hidden=true;
+ const missing=Object.keys(QUESTIONS).filter(k=>!qGet(k));
+ if(CONFIG.requireAll?missing.length:missing.length===Object.keys(QUESTIONS).length){fShow(CONFIG.requireAll?'Bitte beantworte alle Fragen. Noch offen: '+missing.map(k=>QUESTIONS[k].l).join(', ')+'.':'Bitte beantworte mindestens eine Frage.','danger');return}
+ if(!fForm.checkValidity()){fForm.reportValidity();return}
+ if(!CONFIG.formUrl){fShow('Demo-Modus: Das Google Formular ist noch nicht verbunden (CONFIG.formUrl ist leer). Es wurde nichts gesendet.','warning');showExport('Demo: Das würde gesendet','Es wurde nichts gesendet, weil CONFIG.formUrl leer ist.');return}
+ const unmapped=Object.keys(QUESTIONS).filter(k=>!CONFIG.questionEntries[k]);
+ if(unmapped.length){fShow('Das Google Formular ist noch nicht vollständig verbunden: In CONFIG.questionEntries fehlen Feldnummern für '+unmapped.map(k=>QUESTIONS[k].l).join(', ')+'. Es wurde nichts gesendet.','warning');showExport('Demo: Das würde gesendet','Es wurde nichts gesendet, weil Feldnummern fehlen.');return}
+ fSend.disabled=true;const lbl=fSend.innerHTML;fSend.textContent='Wird gesendet …';
+ try{
+  await fetch(CONFIG.formUrl,{method:'POST',mode:'no-cors',body:buildPayload()});
+  document.getElementById('su-formwrap').hidden=true;document.getElementById('su-thanks').hidden=false;window.scrollTo(0,0)
+ }catch(err){
+  fShow('Das Senden hat nicht geklappt. Prüfe deine Verbindung und versuche es noch einmal. Alternativ kannst du deine Antworten über «Als Text anzeigen / kopieren» an uns schicken.','danger');
+ }
+ fSend.disabled=false;fSend.innerHTML=lbl});
+document.getElementById('su-reset').onclick=()=>{Object.keys(QUESTIONS).forEach(k=>qSet(k,''));fForm.reset();qRefresh();document.getElementById('su-thanks').hidden=true;document.getElementById('su-formwrap').hidden=false;fMsg.hidden=true;go(1)};
+
+
+if(new URLSearchParams(location.search).has('debug')){
+ document.getElementById('su-debugwrap').hidden=false;
+ document.getElementById('su-debug').onclick=()=>{window.open(CONFIG.formUrl.replace(/formResponse$/,'viewform')+'?usp=pp_url&'+buildPayload().toString(),'_blank','noopener')};
+}
+
+render();
+go(1);
+qRefresh();
+</script></body></html>
