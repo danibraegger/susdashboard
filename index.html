@@ -171,7 +171,7 @@ body.pg2 .su-bar{display:block}body.pg2{padding-bottom:74px}
 
 <section id="pg1"><div class="su-wrap">
  <h1 class="su-h1">Hilf uns, die SuS-Übersicht besser zu machen</h1>
- <p class="su-lead">Wir entwickeln eine neue Übersichtsseite, auf der alles Wichtige zu einer Schülerin oder einem Schüler an einem Ort zusammenläuft, damit man für die Vorbereitung auf ein Elterngespräch alle Daten an einem Ort hat. Bevor wir sie fertig bauen, möchten wir von dir wissen, ob sie im Schulalltag wirklich weiterhilft.</p>
+ <p class="su-lead">Wir prüfen, ob eine neue Übersichtsseite sinnvoll wäre, die wichtige Informationen zu einer Schülerin oder einem Schüler an einem Ort zeigt, zum Beispiel zur Vorbereitung auf ein Elterngespräch. Ob und in welcher Form wir sie umsetzen, ist noch offen. Deine Einschätzung hilft uns bei dieser Entscheidung.</p>
  <div class="su-cards">
   <div class="su-info"><h2>Was wir von dir wollen</h2><p>Deine ehrliche Einschätzung aus der Praxis: Passt die Übersicht zu deinem Alltag? Was fehlt, was ist überflüssig, was ist unklar? Es gibt keine richtigen oder falschen Antworten.</p></div>
  </div>
@@ -388,15 +388,15 @@ const CONFIG={
 };
 /* type: 'yesno' | 'single' | 'multi' | 'text'; other:true = Auswahl «Sonstiges» mit Textfeld */
 const QUESTIONS={
- filters:{l:'Filter',type:'yesno',t:'Möchtest du zwischen deinen Einträgen/Noten und allen unterscheiden können?'},
- glance:{l:'Auf einen Blick',type:'single',opts:['Durchschnitte unter 4','zu erledigende Absenzen','Schulabsentismuswarnung','Häufigste Journalkategorie'],other:true,t:'Was soll bei auf einen Blick reinkommen?'},
+ filters:{l:'Filter',type:'yesno',other:true,t:'Möchtest du zwischen deinen Einträgen/Noten und allen unterscheiden können?'},
+ glance:{l:'Auf einen Blick',type:'multi',opts:['Durchschnitte unter 4','zu erledigende Absenzen','Schulabsentismuswarnung','Häufigste Journalkategorie'],other:true,t:'Was soll bei auf einen Blick reinkommen?'},
  h_grades:{l:'Beurteilungen und Zeugnisnoten I',type:'text',t:'Möchtest du alle Fächer aufgelistet haben? Auch vermeintlich weniger wichtige Fächer wie Sport oder Musik oder auch das eher unbedeutende Freifach? Wenn nein, wie würdest du es begrenzen?'},
- c_grades:{l:'Beurteilungen & Zeugnisnoten II',type:'yesno',t:'Momentan sieht man die Beurteilungen nach Fach getrennt und nur, wenn man auf das Fach klickt. Fändest du ein Widget sinnvoll, bei dem z. B. einfach die letzten 10 bzw. 20 Beurteilungsanlässe aufgeführt sind?'},
- h_alsv:{l:'Überfachliche Beurteilungen',type:'yesno',t:'Möchtest du nach Einschätzungen filtern können?'},
+ c_grades:{l:'Beurteilungen & Zeugnisnoten II',type:'yesno',other:true,t:'Momentan sieht man die Beurteilungen nach Fach getrennt und nur, wenn man auf das Fach klickt. Fändest du ein Widget sinnvoll, bei dem z. B. einfach die letzten 10 bzw. 20 Beurteilungsanlässe aufgeführt sind?'},
+ h_alsv:{l:'Überfachliche Beurteilungen',type:'yesno',other:true,t:'Möchtest du nach Einschätzungen filtern können?'},
  h_absences:{l:'Absenzen I',type:'text',t:'Macht es Sinn, alle Absenzen anzuzeigen, oder möchtest du sie begrenzen auf gewisse Status oder eine Dauer?'},
- c_absences:{l:'Absenzen II',type:'yesno',t:'Muss man in einer Übersicht wissen, von wem die Absenz erfasst wurde?'},
+ c_absences:{l:'Absenzen II',type:'yesno',other:true,t:'Muss man in einer Übersicht wissen, von wem die Absenz erfasst wurde?'},
  h_journal:{l:'Journal I',type:'single',opts:['Anzahl','Kategorie','Zeitraum','Gar keine Begrenzung'],other:true,t:'Gerade bei SuS mit vielen Journaleinträgen kommt man hier an die Grenzen. Wenn die Liste 30 Einträge hat, wird sie unübersichtlich. Wie würdest du die Anzahl begrenzen? Nach Kategorie, nach Datum oder nach Anzahl?'},
- j_comments:{l:'Journal II',type:'yesno',t:'Sollen die Kommentare angezeigt werden? Gerade wenn ein langer Kommentar verfasst wurde, kann es die Tabelle enorm auseinanderziehen.'},
+ j_comments:{l:'Journal II',type:'yesno',other:true,t:'Sollen die Kommentare angezeigt werden? Gerade wenn ein langer Kommentar verfasst wurde, kann es die Tabelle enorm auseinanderziehen.'},
  j_columns:{l:'Journal III',type:'multi',opts:['Datum','Kategorie','Unterkategorie','Fach','Lehrperson','Status'],other:true,t:'Welche Spalten findest du für eine schnelle Übersicht wichtig?'},
  h_person:{l:'Stammdaten',type:'text',t:'Welche Stammdaten fehlen aus deiner Sicht noch?'}
 };
